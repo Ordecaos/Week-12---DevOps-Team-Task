@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  frontend:
+    container_name: frontend
+    image: myounis789/frontend:latest
+    build: ./spring-petclinic-angular
+    ports:
+      - published: 8080
+        target: 8080
+
+  nginx:
+    container_name: nginx
+    image: myounis789/nginx:latest
+    build: ./NGINX
+    ports:
+      - published: 80
+        target: 80
+    volumes:
+      - type: bind
+        source: ./NGINX/nginx.conf
+        target: /etc/nginx/nginx.conf
+
+  backend:
+    container_name: backend
+    image: myounis789/backend:latest
+    build: ./spring-petclinic-rest
+    ports:
+      - published: 9966
+        target: 9966
