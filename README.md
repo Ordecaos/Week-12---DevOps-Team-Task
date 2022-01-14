@@ -46,30 +46,33 @@ The team is required to plan, design and implement an automed deployment solutio
 
 This project requires the use of a variety of technologies, the following section is dedicated to discussing these technologies as well as the rationale for their use within this project.
 
-* **Hardware and Peripherals:** 
+* **Hardware and Peripherals:** Despite the talk about the use of virtual machines and cloud computing, all work within computers must, at some point, be conducted through physical hardware. As such, this piece of technology has been chosen due to how central it is to having a completed product.
 
-* **Visual Studio Code (VSCode):**
+* **Visual Studio Code (VSCode):** A source-code editor, VSCode has been chosen not only for it's support for debugging and syntax highlighting, but also due to it's ability to connect to a variety of other technologies used within this project including Git, various types of cloud platforms and others. 
 
-* **Git:**
+* **Git:** A version control system, Git is being used not only for it's ability to store the project as a whole but also due to the whole team having closer familiarity to it through the previous projects and time with QA as a whole. 
 
-* **Amazon Web Services(AWS):**
- * **Amazon Elastic Compute Cloud(EC2):**
- * **Cloud Formation:**
- * **Amazon Simple Storage Service(S3):**
- * **Amazon Virtual Private Cloud(VPC):**
- * **IAM Roles:**
+* **Amazon Web Services(AWS):** AWS is the industry standard for cloud computing providing a vast amount of resources for anything and everything a user would require for a project requiring cloud computing. We chose this specific technology due to the fact that it is industry standard, in order to provide the team more hands on experience, but also due to the number of resources available to it, which will be detailed in the following points.
 
-* **Jira:**
+ * **Amazon Elastic Compute Cloud(EC2):** EC2 instances provide a compute engine within the cloud that can create a variety of virtual machines to be used. This has been chosen as it is an essential technology in order to create environments for development, testing and deployment.
 
-* **Github:** 
+ * **Cloud Formation:** A services that provides developers an easy way to create collections of AWS and Third-Party resources. This team will be using this in order to host the Kubenetes clusters. 
 
-* **Jenkins:**
+ * **Amazon Simple Storage Service(S3):** S3 is a service that allows objects to be stored within AWS. We'll be using this to store any and all files that we need for the project but do not get frequently edited. 
 
-* **Docker:**
+ * **Amazon Virtual Private Cloud(VPC):** An AWS service that provides a private virtual network that is defined by the user. It closely resembles a traditional network from a data centre, but is scalable within AWS. We have chosen to use this technology as it is another essential portion of our project, allowing the project to be running within a private, secure network with internet access.
 
-* **Kubernetes:**
+ * **Identity and Access Management(IAM) Roles:** IAM roles are able to specify which services, resources and other condition that certain users can use within AWS. We are using this as a security measure in order to ensure that users are only using appropriate resources, to be as cost effective as possible.
 
-* **Terraform:**
+* **Jira:** The Industry Standard issue tracking software for agile methodology projects. Jira is being used within this project in order to manage and log tasks that have been completed within the project, with assigned story points to indicate the overall difficulty we believe that the task requires.
+
+* **Jenkins:** A Continouous Integreation/Continuous Delivery and development tool, Jenkins is an all in one tool for DevOps. We will be using this due to familiarity with Jenkins, as well as providing all we needed within a single service, as opposed to AWS's CodeBuild, CodeDeploy and CodePipeline which is three seperate services to do a single action.
+
+* **Docker:** A service that takes software and packages it into containers, Docker is an invaluable tool in making a project easily transportable. This is primarily why we are using it within our project and our docker files can be found [here](https://hub.docker.com/u/myounis789)
+
+* **Kubernetes:** An orchestration tool for containers, Kubernetes allows containers to be deployed within Pods, within Clusters to allow for easy and simple deployment of images. We will be using this technology due to being more extensive than other alternatives.
+
+* **Terraform:** An Infrastructre as Code software tool, terraform allows infrastructure to be created with a single command on the Cloud provider. We will be using this in order to create the infrastructure that is needed for the testing and deployment of the application.
 
 * **NGINX:**
 
@@ -118,7 +121,7 @@ The following images displays the application through various days of working.
 
 The Following Image displays the feature branch model within Git:
 
-
+![Branch]()
 
 ## Costs of the Project
 
