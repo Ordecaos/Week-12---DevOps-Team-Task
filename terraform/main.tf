@@ -1,6 +1,15 @@
+terraform {
+    required_providers {
+        aws = {
+            source  = "hashicorp/aws"
+            version = "~> 3.0"
+        }
+    }
+}
+
+# Configure the AWS Provider
 provider "aws" {
-    access_key = "placeholder"
-    secret_key = "placeholder"
+    profile = "dev_profile"
     region = "eu-west-2"
 }
 
