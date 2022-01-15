@@ -1,3 +1,4 @@
+# SUBNETS
 resource "aws_subnet" "prod_subnet" {
   vpc_id = aws_vpc.prod_vpc.id
 
@@ -23,14 +24,13 @@ resource "aws_subnet" "testnet-2" {
 }
 
 
-# Name == Dev
-# Subnet_ID == subnet-07627ed79b4e8d931
-# IPv4 == 10.0.0.0/24
+# ROUTE TABLE ASSOCIATION
+
+resource "aws_route_table_association" "rt-a" {
+  subnet_id      = aws_subnet.prod_subnet.id
+  route_table_id = aws_route_table.prod_route.id
+}
 
 
-# Name == Test
-# Subnet_ID == subnet-0256c9f37f6ff2506
-# IPv4 == 10.0.0.0/24
 
 
-# VPC_ID == vpc-019348fc8d4cd2d79
