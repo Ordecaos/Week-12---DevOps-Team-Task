@@ -74,9 +74,9 @@ This project requires the use of a variety of technologies, the following sectio
 
 * **Terraform:** An Infrastructre as Code software tool, terraform allows infrastructure to be created with a single command on the Cloud provider. We will be using this in order to create the infrastructure that is needed for the testing and deployment of the application.
 
-* **NGINX:**
+* **NGINX:** A webserver that is also able to be used as a reverse proxy, load balancer and HTTP Cache. NGINX has been chosen for this project due to the teams familiarity with it, but additionally, the lead competeror, Apache, recently had a massive security breach which would be an issue with the project which contains databases of consumer information.
 
-* **Maven:**
+* **Maven:** A build automation tool for Java Project. The team is using this due to it already being implemented within the project before we began applying DevOps principals to it, using it as an opportunity to learn this new technology.
 
 ## Risk Assessment
 
