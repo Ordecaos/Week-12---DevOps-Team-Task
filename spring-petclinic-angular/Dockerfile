@@ -20,7 +20,7 @@ RUN sudo chmod a+rwx /var/cache/nginx /var/run /var/log/nginx                   
     sudo sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf
 
 
-EXPOSE 8080
+EXPOSE 4200
 
 USER nginx
 
