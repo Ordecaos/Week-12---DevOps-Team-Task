@@ -25,7 +25,7 @@ The Following individuals are a part of this team:
 
 * Bradley: Kubernetes Engineer
 
-* Chester: Core Coder
+* Chester: IaC Engineer
 
 * Jack: Scrum Master/Project Lead
 
