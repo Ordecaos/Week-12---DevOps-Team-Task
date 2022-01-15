@@ -1,3 +1,3 @@
-variable "vpc_cidr_block" {
-    description = "VPC CIDR block"
+variable "main_cidr_block" {
+  description = "Main CIDR block"
 }

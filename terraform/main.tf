@@ -6,42 +6,37 @@ terraform {
     }
   }
 
-# Configure the AWS Provider
-provider "aws" {
-  profile = "dev_profile"
-  region  = "eu-west-2"
-}
-
-resource "aws_instance" "manager_node" {
-  ami           = "ami-0015a39e4b7c0966f"
-  instance_type = "t2.micro"
-    tags = {
-      Name = "Manager Node"
-  }
-}
-
-resource "aws_instance" "worker_node" {
-  ami           = "ami-0015a39e4b7c0966f"
-  instance_type = "t2.micro"
-    tags = {
-      Name = "Worker Node"
-  }
-}
-
-resource "aws_instance" "jenkins" {
-  ami           = "ami-0015a39e4b7c0966f"
-  instance_type = "t2.medium"
-    tags = {
-      Name = "CI/CD Server"
+  # Configure the AWS Provider
+  provider "aws" {
+    profile = "group_admin"
+    region  = "eu-west-2"
+    shared_credentials_file = "~/.aws/credentials"
   }
 
-}
-
-resource "aws_instance" "load_balancer" {
-  ami           = "ami-0015a39e4b7c0966f"
-  instance_type = "t2.micro"
-    tags = {
-      Name = "Load Balancer"
+  
+  # Define source modules for other AWS configurations
+  module "instances" {
+    source                 = "./EC2"
+  }
+  module "vpc" {
+    source         = "./VPC"
+    main_cidr_block = "10.0.0.0/24"
+  }
+  module "igw" {
+    source   = "./INTERNET_GATEWAYS"
+  }
+  module "subnet" {
+    source         = "./SUBNET"
   }
 
-}
+  module "security_groups" {
+    source = "./SECURITY_GROUPS"
+  }
+
+  module "iam" {
+    source = "./IAM"
+  }
+
+  module "eks" {
+    source               = "./EKS"
+  }

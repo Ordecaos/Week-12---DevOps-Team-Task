@@ -1,8 +1,7 @@
-resource "aws_vpc" "vpc" {
-    cidr_block = var.vpc_cidr_block
-    enable_dns_hostnames = true
-    tags = {
-        Name = "Main_Project_VPC"
-        ID = "vpc-019348fc8d4cd2d79"
-    }
+resource "aws_vpc" "prod_vpc" {
+  cidr_block           = main_cidr_block
+  enable_dns_hostnames = true
+  tags = {
+    Name = "Production_VPC"
+  }
 }
