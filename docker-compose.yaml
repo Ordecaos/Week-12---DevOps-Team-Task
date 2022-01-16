@@ -5,8 +5,8 @@ services:
     image: myounis789/frontend:latest
     build: ./spring-petclinic-angular
     ports:
-      - published: 8080
-        target: 8080
+      - published: 4200
+        target: 4200
 
   nginx:
     container_name: nginx
