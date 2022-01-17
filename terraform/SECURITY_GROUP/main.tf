@@ -1,4 +1,4 @@
-# Creates ingress and egress rules for security group
+# CREATES INGREE AND EGRESS RULES FOR SECURITY_GROUP
 
 resource "aws_security_group" "web_traffic" {
   name        = "Web Traffic"
@@ -68,7 +68,7 @@ resource "aws_security_group" "web_traffic" {
 
 
 resource "aws_network_interface" "web_server" {
-  subnet_id       = aws_subnet.subnet-1.id
+  subnet_id       = [var.subnet-1, var.subnet-2]
   private_ips     = ["10.0.1.50"]
   security_groups = [aws_security_group.web_traffic.id]
 }

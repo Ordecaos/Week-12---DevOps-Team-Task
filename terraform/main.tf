@@ -25,14 +25,17 @@ module "vpc" {
   main_cidr_block = "10.0.0.0/24"
 }
 module "igw" {
-  source = "./INTERNET_GATEWAYS"
+  source = "./INTERNET_GATEWAY"
+  vpc_id = module.vpc.vpc_id
 }
 module "subnet" {
   source = "./SUBNET"
+  vpc_id = module.vpc.vpc_id
 }
 
 module "security_groups" {
-  source = "./SECURITY_GROUPS"
+  source = "./SECURITY_GROUP"
+  vpc_id = module.vpc.vpc_id
 }
 
 module "iam" {

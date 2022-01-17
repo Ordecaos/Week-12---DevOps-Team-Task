@@ -1,30 +1,30 @@
 resource "aws_instance" "manager_node" {
-  ami           = "ami-0015a39e4b7c0966f"
-  instance_type = "t2.micro"
+  ami           = var.ami
+  instance_type = var.instance_micro
   tags = {
-    Name = "Manager Node"
+    Name = var.manager
   }
 
 }
 
 resource "aws_instance" "worker_node" {
-  ami           = "ami-0015a39e4b7c0966f"
-  instance_type = "t2.micro"
+  ami           = var.ami
+  instance_type = var.instance_micro
   tags = {
-    Name = "Worker Node"
+    Name = var.worker
   }
 }
 resource "aws_instance" "jenkins" {
-  ami           = "ami-0015a39e4b7c0966f"
-  instance_type = "t2.medium"
+  ami           = var.ami
+  instance_type = var.instance_medium
   tags = {
-    Name = "CI/CD Server"
+    Name = var.jenkins
   }
 }
 
 # resource "aws_instance" "load_balancer" {
-#   ami           = "ami-0015a39e4b7c0966f"
-#   instance_type = "t2.micro"
+#   ami           = var.ami
+#   instance_type = var.instance_micro
 #   tags = {
 #     Name = "Load Balancer"
 #   }
@@ -33,8 +33,8 @@ resource "aws_instance" "jenkins" {
 
 
 resource "aws_instance" "load_balancer" {
-  ami               = "ami-0015a39e4b7c0966f"
-  instance_type     = "t2.micro"
+  ami               = var.ami
+  instance_type     = var.instance_micro
   availability_zone = "eu-west-2a"
   key_name          = "Dev"
 
@@ -61,6 +61,6 @@ EOF
   }
 
   tags = {
-    Name = "Load Balancer"
+    Name = var.nginx
   }
 }
