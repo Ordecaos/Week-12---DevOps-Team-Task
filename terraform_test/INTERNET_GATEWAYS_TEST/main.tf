@@ -1,6 +1,6 @@
 
 resource "aws_internet_gateway" "test_gw" {
-  vpc_id = aws_vpc.prod_vpc.id
+  vpc_id = aws_vpc.test_vpc.id
 
   tags = {
     Name = "Main Gateway"
@@ -8,7 +8,7 @@ resource "aws_internet_gateway" "test_gw" {
 }
 
 resource "aws_route_table" "test_table" {
-  vpc_id = aws_vpc.prod_vpc.id
+  vpc_id = aws_vpc.test_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"

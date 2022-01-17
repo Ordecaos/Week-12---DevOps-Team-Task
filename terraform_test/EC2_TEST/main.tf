@@ -1,38 +1,33 @@
-resource "aws_instance" "manager_node" {
+resource "aws_instance" "manager_test" {
   ami           = "ami-0015a39e4b7c0966f"
   instance_type = "t2.micro"
   tags = {
-    Name = "Manager Node"
+    Name = "Manager TEST"
   }
-
 }
-
-resource "aws_instance" "worker_node" {
+resource "aws_instance" "worker_test" {
   ami           = "ami-0015a39e4b7c0966f"
   instance_type = "t2.micro"
   tags = {
-    Name = "Worker Node"
+    Name = "Worker TEST"
   }
 }
-resource "aws_instance" "jenkins" {
+resource "aws_instance" "jenkins_test" {
   ami           = "ami-0015a39e4b7c0966f"
   instance_type = "t2.medium"
   tags = {
-    Name = "CI/CD Server"
+    Name = "CI/CD Server TEST"
   }
 }
 
-# resource "aws_instance" "load_balancer" {
+# resource "aws_instance" "load_balancer_test" {
 #   ami           = "ami-0015a39e4b7c0966f"
 #   instance_type = "t2.micro"
 #   tags = {
-#     Name = "Load Balancer"
+#     Name = "Load Balancer TEST"
 #   }
-# }
 
-
-
-resource "aws_instance" "load_balancer" {
+resource "aws_instance" "load_balancer_test" {
   ami               = "ami-0015a39e4b7c0966f"
   instance_type     = "t2.micro"
   availability_zone = "eu-west-2a"
@@ -57,10 +52,10 @@ EOF
 
   network_interface {
     device_index         = 0
-    network_interface_id = aws_network_interface.web_server.id
+    network_interface_id = aws_network_interface.web_server_test.id
   }
 
   tags = {
-    Name = "Load Balancer"
+    Name = "Load Balancer TEST"
   }
 }
