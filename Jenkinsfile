@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages{
-        stage ('Tests'){
+        stage ('NG Tests'){
             steps{
                 //to be added, tests to ensure that the kubernetes & terraform are working as intended
             }
