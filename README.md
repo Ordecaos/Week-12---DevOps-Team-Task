@@ -80,7 +80,9 @@ This project requires the use of a variety of technologies, the following sectio
 
 ## Risk Assessment
 
-The following image is the Risk Assessment of the project
+The following image is the Risk Assessment of the project:
+
+![Risk-assessment](https://github.com/Ordecaos/Week-12---DevOps-Team-Task/blob/Jack/Images/Risk%20Assessment.png?raw=true)
 
 ## CI Pipeline
 
