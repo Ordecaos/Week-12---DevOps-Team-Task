@@ -127,7 +127,20 @@ The Following Image displays the feature branch model within Git:
 
 ## Costs of the Project
 
-Cost is always a known factor within a project. 
+Cost is always a known factor within a project. After some calculations, we have estimated that this project would cost $208.72 per month and $2,504.64 per year to run constantly for 24 hours a day. Converting this to british pounds, this is £152.88 per month and £1834.51 per year. 
+This cost is estimated by our percieved needs with the project which is three micro t2 EC2 instances to run with NGINX load balancer as well as the containerised images of the application. There would also need to be a large t2 EC2 instance in order to contain Jenkins, Maven as well as the project files that are necessary for the project as a whole to work. Additionally, one EKS cluster is required in order to use Kubernetes within AWS to it's full extend. Two AWS Elastic IP's are also required, one for the Jenkins and Maven EC2 instance, and one for the primary project's VM's. Finally a NAT gateway to allow connections to and from the internet.
+
+* EC2 t2.micro x3 = $30.37/£22.24
+
+* EC2 t2.large = $56.55/£41.42
+
+* AWS EKS = $73.00/$53.47
+
+* AWS Elastic IP = $7.30/£5.35
+
+* AWS VPC (NAT Gateway) = $41.50/£30.40
+
+![Estimates_Cost](https://github.com/Ordecaos/Week-12---DevOps-Team-Task/blob/Jack/Images/Estimated%20Costs.png?raw=true)
 
 ## Current State
 

@@ -2,7 +2,7 @@ version: '3.8'
 services:
   frontend:
     container_name: frontend
-    image: myounis789/frontend:latest
+    image: node:10.20-alpine
     build: ./spring-petclinic-angular
     ports:
       - published: 4200
@@ -10,7 +10,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: myounis789/nginx:latest
+    image: nginx:latest
     build: ./NGINX
     ports:
       - published: 80
@@ -22,7 +22,7 @@ services:
 
   backend:
     container_name: backend
-    image: myounis789/backend:latest
+    image: springcommunity/spring-petclinic-rest
     build: ./spring-petclinic-rest
     ports:
       - published: 9966
