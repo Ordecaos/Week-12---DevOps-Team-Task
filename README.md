@@ -140,7 +140,7 @@ This cost is estimated by our percieved needs with the project which is three mi
 
 * AWS VPC (NAT Gateway) = $41.50/£30.40
 
-![Estimates_Cost]()
+![Estimates_Cost](https://github.com/Ordecaos/Week-12---DevOps-Team-Task/blob/Jack/Images/Estimated%20Costs.png?raw=true)
 
 ## Current State
 
