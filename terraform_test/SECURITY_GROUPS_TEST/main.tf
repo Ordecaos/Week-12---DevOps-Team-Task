@@ -1,8 +1,8 @@
 # Creates ingress and egress rules for security group
 
-resource "aws_security_group" "web_traffic" {
-  name        = "Web Traffic"
-  description = "Allow inbound and outbound web traffic"
+resource "aws_security_group" "web_traffic_test" {
+  name        = "Web Traffic TEST"
+  description = "Testing web traffic"
   vpc_id      = aws_vpc.prod_vpc.id
 
   ingress {
@@ -46,22 +46,22 @@ resource "aws_security_group" "web_traffic" {
   }
 
   tags = {
-    Name = "Allow Web Traffic"
+    Name = "Allow Web Traffic TEST"
   }
 }
 
 
-resource "aws_network_interface" "web_server" {
+resource "aws_network_interface" "web_server_test" {
   subnet_id       = aws_subnet.subnet-1.id
   private_ips     = ["10.0.1.50"]
-  security_groups = [aws_security_group.web_traffic.id]
+  security_groups = [aws_security_group.web_traffic_test.id]
 }
 
 
-resource "aws_eip" "eip" {
+resource "aws_eip" "test_eip" {
   vpc                       = true
-  network_interface         = aws_network_interface.web_server.id
+  network_interface         = aws_network_interface.web_server_test.id
   associate_with_private_ip = "10.0.1.50"
-  depends_on                = aws_internet_gateway.gw
+  depends_on                = aws_internet_gateway.test_gw
 }
 
