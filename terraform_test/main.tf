@@ -6,37 +6,39 @@ terraform {
     }
   }
 
-  # Configure the AWS Provider
-  provider "aws" {
-    profile = "group_admin"
-    region  = "eu-west-2"
-    shared_credentials_file = "~/.aws/credentials"
-  }
+}
 
-  
-  # Define source modules for other AWS configurations
-  module "instances" {
-    source                 = "./EC2"
-  }
-  module "vpc" {
-    source         = "./VPC"
-    main_cidr_block = "10.0.0.0/24"
-  }
-  module "igw" {
-    source   = "./INTERNET_GATEWAYS"
-  }
-  module "subnet" {
-    source         = "./SUBNET"
-  }
+# Configure the AWS Provider
+provider "aws" {
+  profile                 = "group_admin"
+  region                  = "eu-west-2"
+  shared_credentials_file = "~/.aws/credentials"
+}
 
-  module "security_groups" {
-    source = "./SECURITY_GROUPS"
-  }
 
-  module "iam" {
-    source = "./IAM"
-  }
+# Define source modules for other AWS configurations
+module "instances_test" {
+  source = "./EC2_TEST"
+}
+module "vpc_test" {
+  source          = "./VPC_TEST"
+  main_cidr_block = "10.0.0.0/24"
+}
+module "igw_test" {
+  source = "./INTERNET_GATEWAYS_TEST"
+}
+module "subnet_test" {
+  source = "./SUBNET_TEST"
+}
 
-  module "eks" {
-    source               = "./EKS"
-  }
+module "security_groups_test" {
+  source = "./SECURITY_GROUPS_TEST"
+}
+
+module "iam_test" {
+  source = "./IAM_TEST"
+}
+
+module "eks_test" {
+  source = "./EKS_TEST"
+}

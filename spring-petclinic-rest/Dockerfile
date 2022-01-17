@@ -1,4 +1,4 @@
-FROM myounis789/backend:latest AS build-stage
+FROM maven:latest AS build-stage
 COPY . /build
 WORKDIR /build
 RUN mvn clean package -DskipTests
