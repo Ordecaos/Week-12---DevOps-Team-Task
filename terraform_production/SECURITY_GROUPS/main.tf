@@ -1,6 +1,8 @@
-resource "aws_security_group" "allow_web_traffic" {
+# Creates ingress and egress rules for security group
+
+resource "aws_security_group" "web_traffic" {
   name        = "Web Traffic"
-  description = "Allow HTTP inbound traffic"
+  description = "Allow inbound and outbound web traffic"
   vpc_id      = aws_vpc.prod_vpc.id
 
   ingress {
@@ -38,7 +40,7 @@ resource "aws_security_group" "allow_web_traffic" {
   egress {
     from_port        = 0
     to_port          = 0
-    protocol         = "-1"
+    protocol         = "-1" # Any protocol
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
@@ -47,3 +49,19 @@ resource "aws_security_group" "allow_web_traffic" {
     Name = "Allow Web Traffic"
   }
 }
+
+
+resource "aws_network_interface" "web_server" {
+  subnet_id       = aws_subnet.subnet-1.id
+  private_ips     = ["10.0.1.50"]
+  security_groups = [aws_security_group.web_traffic.id]
+}
+
+
+resource "aws_eip" "lb" {
+  vpc                       = true
+  network_interface         = aws_network_interface.web_server.id
+  associate_with_private_ip = "10.0.1.50"
+  depends_on                = aws_internet_gateway.gw
+}
+
