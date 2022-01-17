@@ -16,8 +16,8 @@ resource "aws_route_table" "test_table" {
   }
 
   route {
-    ipv6_cidr_block        = "::/0"
-    egress_only_gateway_id = aws_internet_gateway.test_gw.id
+    ipv6_cidr_block = "::/0"
+    gateway_id      = aws_internet_gateway.test_gw.id
   }
 
   tags = {
