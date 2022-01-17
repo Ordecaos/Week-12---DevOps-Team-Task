@@ -22,7 +22,7 @@ services:
 
   backend:
     container_name: backend
-    image: springcommunity/spring-petclinic-rest
+    image: myounis789/rest:latest
     build: ./spring-petclinic-rest
     ports:
       - published: 9966
