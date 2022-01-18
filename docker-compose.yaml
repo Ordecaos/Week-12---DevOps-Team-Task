@@ -1,12 +1,23 @@
 version: '3.8'
 services:
+
+  backend:
+    container_name: backend
+    image: lordkalmed/backend:latest
+    build: ./spring-petclinic-rest
+    ports:
+      - published: 9966
+        target: 9966
+
   frontend:
     container_name: frontend
-    image: lordkalmed/frontend:latest
+    image: myounis789/frontend:latest
     build: ./spring-petclinic-angular
     ports:
       - published: 4200
         target: 4200
+    depends_on:
+      - "backend"
 
   nginx:
     container_name: nginx
@@ -19,11 +30,13 @@ services:
       - type: bind
         source: ./NGINX/nginx.conf
         target: /etc/nginx/nginx.conf
+    depends_on:
+      - "backend"
 
-  backend:
-    container_name: backend
-    image: lordkalmed/backend:latest
-    build: ./spring-petclinic-rest
-    ports:
-      - published: 9966
-        target: 9966
+#  backend:
+#    container_name: backend
+#    image: lordkalmed/backend:latest
+#    build: ./spring-petclinic-rest
+#    ports:
+#      - published: 9966
+#        target: 9966
