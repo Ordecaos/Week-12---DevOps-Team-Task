@@ -40,3 +40,9 @@ variable "nginx" {
   default     = "Load Balancer"
 }
 
+variable "web_server_id" {
+  type        = string
+  description = "AWS Network Interface ID"
+}
+
+

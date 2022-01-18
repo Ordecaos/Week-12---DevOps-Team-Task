@@ -3,7 +3,7 @@
 resource "aws_security_group" "web_traffic" {
   name        = "Web Traffic"
   description = "Allow inbound and outbound web traffic"
-  vpc_id      = aws_vpc.prod_vpc.id
+  vpc_id      = var.vpc_id
 
   ingress {
     description = "HTTPS"
@@ -68,16 +68,16 @@ resource "aws_security_group" "web_traffic" {
 
 
 resource "aws_network_interface" "web_server" {
-  subnet_id       = [var.subnet-1, var.subnet-2]
+  subnet_id       = [var.subnet_1, var.subnet_2]
   private_ips     = ["10.0.1.50"]
-  security_groups = [aws_security_group.web_traffic.id]
+  security_groups = [var.web_traffic]
 }
 
 
 resource "aws_eip" "eip" {
   vpc                       = true
-  network_interface         = aws_network_interface.web_server.id
+  network_interface         = var.web_server
   associate_with_private_ip = "10.0.1.50"
-  depends_on                = aws_internet_gateway.gw
+  depends_on                = var.gateway_id
 }
 

@@ -57,7 +57,7 @@ EOF
 
   network_interface {
     device_index         = 0
-    network_interface_id = aws_network_interface.web_server.id
+    network_interface_id = var.web_server_id
   }
 
   tags = {

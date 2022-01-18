@@ -21,8 +21,8 @@ module "instances" {
 
 }
 module "vpc" {
-  source          = "./VPC"
-  main_cidr_block = "10.0.0.0/24"
+  source     = "./VPC"
+  cidr_block = "10.0.0.0/24"
 }
 module "igw" {
   source = "./INTERNET_GATEWAY"
@@ -34,8 +34,10 @@ module "subnet" {
 }
 
 module "security_groups" {
-  source = "./SECURITY_GROUP"
-  vpc_id = module.vpc.vpc_id
+  source     = "./SECURITY_GROUP"
+  vpc_id     = module.vpc.vpc_id
+  gateway_id = module.igw.gw_id
+  subnet_id  = [module.subnet.subnet_1, module.subnet.subnet_2]
 }
 
 module "iam" {
