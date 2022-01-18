@@ -1,16 +1,18 @@
-version: '3.8'
+version: "3.8"
 services:
   frontend:
     container_name: frontend
-    image: node:10.20-alpine
+    image: lordkalmed/frontend:latest
     build: ./spring-petclinic-angular
     ports:
       - published: 4200
         target: 4200
+    deploy:
+      replicas: 2
 
   nginx:
     container_name: nginx
-    image: nginx:latest
+    image: lordkalmed/frontend:latest
     build: ./NGINX
     ports:
       - published: 80
@@ -19,6 +21,8 @@ services:
       - type: bind
         source: ./NGINX/nginx.conf
         target: /etc/nginx/nginx.conf
+    deploy:
+      replicas: 2
 
   backend:
     container_name: backend
@@ -27,3 +31,5 @@ services:
     ports:
       - published: 9966
         target: 9966
+    deploy:
+      replicas: 2
