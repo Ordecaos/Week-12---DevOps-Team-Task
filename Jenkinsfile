@@ -3,7 +3,9 @@ pipeline {
     stages{
         stage ('NG Tests'){
             steps{
-                //to be added, tests to ensure that the kubernetes & terraform are working as intended
+                sh "ng test"
+                sh "ng serve"
+                sh "ng e2e"
             }
         }
         stage ('Build and Push Images'){
