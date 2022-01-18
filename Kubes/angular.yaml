@@ -8,8 +8,8 @@ spec:
     app: frontend
   ports:
   - protocol: TCP
-    port: 8090
-    targetPort: 8090
+    port: 8080
+    targetPort: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,6 +33,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: myounis789/frontend:latest #node:10.20-alpine  #myounis789/frontend:latest
+        image: myounis789/frontend:latest #lordkalmed/frontend:latest # #node:10.20-alpine  #myounis789/frontend:latest
         ports:
         - containerPort: 80
