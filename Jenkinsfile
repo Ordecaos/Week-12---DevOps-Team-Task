@@ -21,7 +21,9 @@ pipeline {
         }
         stage ('Manage confiruation & deploy'){
             steps{
-                //to be added, terraform building & kubernetes spinning up the cluster
+                sh "terraform init"
+                sh "terraform plan"
+                sh "terraform apply"
             }
         }
     }
