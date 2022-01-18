@@ -1,5 +1,5 @@
 resource "aws_subnet" "subnet-1" {
-  vpc_id            = aws_vpc.prod_vpc.id
+  vpc_id            = var.vpc_id
   availability_zone = "eu-west-2a"
 
   tags = {
@@ -8,7 +8,7 @@ resource "aws_subnet" "subnet-1" {
 }
 
 resource "aws_subnet" "subnet-2" {
-  vpc_id            = aws_vpc.prod_vpc.id
+  vpc_id            = var.vpc_id
   availability_zone = "eu-west-2a"
 
   tags = {
@@ -20,8 +20,8 @@ resource "aws_subnet" "subnet-2" {
 # ROUTE TABLE ASSOCIATION
 
 resource "aws_route_table_association" "rt-a" {
-  subnet_id      = aws_subnet.prod_subnet.id
-  route_table_id = aws_route_table.prod_route.id
+  subnet_id      = [var.subnet-1, var.subnet-2]
+  route_table_id = var.route_table
 }
 
 

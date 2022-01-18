@@ -26,6 +26,7 @@
         <jsr305.version>3.0.2</jsr305.version>
         <jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <jaxb-api.version>2.3.0</jaxb-api.version>
         <openapi-generator-maven-plugin.version>5.2.1</openapi-generator-maven-plugin.version>
         <build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>

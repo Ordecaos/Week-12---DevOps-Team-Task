@@ -5,7 +5,6 @@ terraform {
       version = "~> 3.0"
     }
   }
-
 }
 
 # Configure the AWS Provider
@@ -17,28 +16,32 @@ provider "aws" {
 
 
 # Define source modules for other AWS configurations
-module "instances_test" {
-  source = "./EC2_TEST"
+module "instances" {
+  source = "./EC2"
+
 }
-module "vpc_test" {
-  source          = "./VPC_TEST"
+module "vpc" {
+  source          = "./VPC"
   main_cidr_block = "10.0.0.0/24"
 }
-module "igw_test" {
-  source = "./INTERNET_GATEWAYS_TEST"
+module "igw" {
+  source = "./INTERNET_GATEWAY"
+  vpc_id = module.vpc.vpc_id
 }
-module "subnet_test" {
-  source = "./SUBNET_TEST"
-}
-
-module "security_groups_test" {
-  source = "./SECURITY_GROUPS_TEST"
+module "subnet" {
+  source = "./SUBNET"
+  vpc_id = module.vpc.vpc_id
 }
 
-module "iam_test" {
-  source = "./IAM_TEST"
+module "security_groups" {
+  source = "./SECURITY_GROUP"
+  vpc_id = module.vpc.vpc_id
 }
 
-module "eks_test" {
-  source = "./EKS_TEST"
+module "iam" {
+  source = "./IAM"
+}
+
+module "eks" {
+  source = "./EKS"
 }
