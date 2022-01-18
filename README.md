@@ -111,7 +111,7 @@ The following images displays the application through various days of working.
 
 #### Day 3
 
-![Day 3]()
+![Day 3](https://github.com/Ordecaos/Week-12---DevOps-Team-Task/blob/Jack/Images/Day3.png?raw=true)
 
 #### Day 4
 
