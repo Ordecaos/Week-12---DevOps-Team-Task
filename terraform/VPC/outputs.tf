@@ -3,5 +3,5 @@ output "vpc_id" {
 }
 
 output "vpc_cidr_block" {
-  value = aws_vpc.vpc.cidr_block
+  value = aws_vpc.prod_vpc.cidr_block
 }

@@ -1,4 +1,4 @@
-# CREATES INGREE AND EGRESS RULES FOR SECURITY_GROUP
+# CREATES INGRESS AND EGRESS RULES FOR SECURITY_GROUP
 
 resource "aws_security_group" "web_traffic" {
   name        = "Web Traffic"
@@ -67,17 +67,29 @@ resource "aws_security_group" "web_traffic" {
 }
 
 
-resource "aws_network_interface" "web_server" {
-  subnet_id       = [var.subnet_1, var.subnet_2]
+resource "aws_network_interface" "web_server_1" {
+  subnet_id       = var.subnet_1
   private_ips     = ["10.0.1.50"]
   security_groups = [var.web_traffic]
 }
 
+resource "aws_network_interface" "web_server_2" {
+  subnet_id       = var.subnet_2
+  private_ips     = ["10.0.1.51"]
+  security_groups = [var.web_traffic]
+}
 
-resource "aws_eip" "eip" {
+
+resource "aws_eip" "eip1" {
   vpc                       = true
-  network_interface         = var.web_server
+  network_interface         = var.web_server_1
   associate_with_private_ip = "10.0.1.50"
   depends_on                = [var.gateway_id]
 }
 
+resource "aws_eip" "eip2" {
+  vpc                       = true
+  network_interface         = var.web_server_2
+  associate_with_private_ip = "10.0.1.51"
+  depends_on                = [var.gateway_id]
+}

@@ -10,12 +10,12 @@ variable "web_traffic" {
   description = "AWS Security Group"
 }
 
-variable "web_server" {
+variable "web_server_1" {
   type        = string
-  description = "AWS Network Interface"
+  description = "AWS Network Interface 1 ID"
 }
 
-variable "eip" {
+variable "web_server_2" {
   type        = string
-  description = "Elastic IP Address"
+  description = "AWS Network Interface 2 ID "
 }

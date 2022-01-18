@@ -1,3 +1,11 @@
+variable "web_server_1" {}
+
+variable "web_server_2" {}
+
+variable "subnet_1" {}
+
+variable "subnet_2" {}
+
 variable "ami" {
   type        = string
   description = "Amazon Machine Image"
@@ -15,38 +23,3 @@ variable "instance_medium" {
   description = "Medium EC2 Instance"
   default     = "t2.medium"
 }
-
-variable "web_server_id" {
-  type        = string
-  description = "AWS Network Interface ID"
-}
-
-
-
-
-# variable "manager" {
-#   type        = string
-#   description = "Name for Manager Node"
-#   default     = "Manager Node"
-# }
-
-# variable "worker" {
-#   type        = string
-#   description = "Name for Worker Node"
-#   default     = "Worker Node"
-# }
-
-# variable "jenkins" {
-#   type        = string
-#   description = "Name for CI/CD Server"
-#   default     = "CI/CD Server"
-# }
-
-# variable "nginx" {
-#   type        = string
-#   description = "Name for Load Balancer"
-#   default     = "Load Balancer"
-# }
-
-
-
