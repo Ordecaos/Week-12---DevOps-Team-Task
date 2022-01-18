@@ -2,7 +2,7 @@ resource "aws_instance" "manager_node" {
   ami           = var.ami
   instance_type = var.instance_micro
   tags = {
-    Name = var.manager
+    Name = "Manager Node"
   }
 
 }
@@ -11,14 +11,14 @@ resource "aws_instance" "worker_node" {
   ami           = var.ami
   instance_type = var.instance_micro
   tags = {
-    Name = var.worker
+    Name = "Worker Node"
   }
 }
 resource "aws_instance" "jenkins" {
   ami           = var.ami
   instance_type = var.instance_medium
   tags = {
-    Name = var.jenkins
+    Name = "CI/CD Server"
   }
 }
 
@@ -61,6 +61,6 @@ EOF
   }
 
   tags = {
-    Name = var.nginx
+    Name = "Load Balancer"
   }
 }

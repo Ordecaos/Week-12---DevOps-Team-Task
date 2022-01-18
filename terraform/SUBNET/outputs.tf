@@ -1,5 +1,5 @@
 output "subnet_1" {
-  value = value = aws_vpc.subnet_1.id
+  value = aws_vpc.subnet_1.id
 }
 
 output "subnet_2" {
@@ -7,5 +7,5 @@ output "subnet_2" {
 }
 
 output "rta" {
-    value = aws_route_table_association.rta.id
+  value = aws_route_table_association.rta
 }

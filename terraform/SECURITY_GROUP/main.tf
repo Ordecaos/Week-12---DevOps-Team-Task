@@ -78,6 +78,6 @@ resource "aws_eip" "eip" {
   vpc                       = true
   network_interface         = var.web_server
   associate_with_private_ip = "10.0.1.50"
-  depends_on                = var.gateway_id
+  depends_on                = [var.gateway_id]
 }
 

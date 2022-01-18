@@ -16,33 +16,37 @@ variable "instance_medium" {
   default     = "t2.medium"
 }
 
-variable "manager" {
-  type        = string
-  description = "Name for Manager Node"
-  default     = "Manager Node"
-}
-
-variable "worker" {
-  type        = string
-  description = "Name for Worker Node"
-  default     = "Worker Node"
-}
-
-variable "jenkins" {
-  type        = string
-  description = "Name for CI/CD Server"
-  default     = "CI/CD Server"
-}
-
-variable "nginx" {
-  type        = string
-  description = "Name for Load Balancer"
-  default     = "Load Balancer"
-}
-
 variable "web_server_id" {
   type        = string
   description = "AWS Network Interface ID"
 }
+
+
+
+
+# variable "manager" {
+#   type        = string
+#   description = "Name for Manager Node"
+#   default     = "Manager Node"
+# }
+
+# variable "worker" {
+#   type        = string
+#   description = "Name for Worker Node"
+#   default     = "Worker Node"
+# }
+
+# variable "jenkins" {
+#   type        = string
+#   description = "Name for CI/CD Server"
+#   default     = "CI/CD Server"
+# }
+
+# variable "nginx" {
+#   type        = string
+#   description = "Name for Load Balancer"
+#   default     = "Load Balancer"
+# }
+
 
 

@@ -3,7 +3,7 @@ resource "aws_subnet" "subnet_1" {
   availability_zone = "eu-west-2a"
 
   tags = {
-    Name = var.sub1_name
+    Name = "Subnet-1"
   }
 }
 
@@ -12,7 +12,7 @@ resource "aws_subnet" "subnet_2" {
   availability_zone = "eu-west-2a"
 
   tags = {
-    Name = var.sub2_name
+    Name = "Subnet-2"
   }
 }
 

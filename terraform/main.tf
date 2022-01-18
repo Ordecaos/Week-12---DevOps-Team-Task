@@ -25,8 +25,9 @@ module "vpc" {
   cidr_block = "10.0.0.0/24"
 }
 module "igw" {
-  source = "./INTERNET_GATEWAY"
-  vpc_id = module.vpc.vpc_id
+  source    = "./INTERNET_GATEWAY"
+  vpc_id    = module.vpc.vpc_id
+  route_table = 
 }
 module "subnet" {
   source = "./SUBNET"
