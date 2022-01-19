@@ -19,11 +19,23 @@ pipeline {
                 sh "docker-compose push"
             }
         }
-        stage ('Manage confiruation & deploy'){
+        stage ('Manage confiruation'){
             steps{
+                sh "cd terraform"
                 sh "terraform init"
                 sh "terraform plan"
                 sh "terraform apply"
+                sh "cd .."
+            }
+        stage ('Deploy')
+            steps{
+                sh "scp deploy.sh <VM name/port>:/home/deploy.sh"
+                sh "scp docker-compose.yaml <VM name/port>:/home/jenkins/docker-compose.yaml"
+                sh "cd Kubes"
+                sh "scp angular.yaml <VM name/port>:/home/jenkins/angular.yaml"
+                sh "scp configmap.yaml <VM name/port>:/home/jenkins/configmap.yaml.yaml"
+                sh "scp nginx.yaml <VM name/port>:/home/jenkins/nginx.yaml"
+                sh "scp rest.yaml <VM name/port>:/home/jenkins/rest.yaml"
             }
         }
     }
