@@ -69,15 +69,19 @@ resource "aws_security_group" "web_traffic" {
 
 resource "aws_network_interface" "web_server_1" {
   subnet_id       = var.subnet_1
-  private_ips     = ["10.0.1.50"]
+  private_ips     = ["10.0.0.178"]
   security_groups = [var.web_traffic]
+
+  tags = {
+    Name = "Main Web Server"
+  }
 }
 
-resource "aws_network_interface" "web_server_2" {
-  subnet_id       = var.subnet_2
-  private_ips     = ["10.0.1.51"]
-  security_groups = [var.web_traffic]
-}
+# resource "aws_network_interface" "web_server_2" {
+#   subnet_id       = var.subnet_2
+#   private_ips     = ["10.0.1.51"]
+#   security_groups = [var.web_traffic]
+# }
 
 
 resource "aws_eip" "eip1" {
@@ -87,9 +91,9 @@ resource "aws_eip" "eip1" {
   depends_on                = [var.gateway_id]
 }
 
-resource "aws_eip" "eip2" {
-  vpc                       = true
-  network_interface         = var.web_server_2
-  associate_with_private_ip = "10.0.1.51"
-  depends_on                = [var.gateway_id]
-}
+# resource "aws_eip" "eip2" {
+#   vpc                       = true
+#   network_interface         = var.web_server_2
+#   associate_with_private_ip = "10.0.1.51"
+#   depends_on                = [var.gateway_id]
+# }

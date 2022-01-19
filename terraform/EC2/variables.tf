@@ -1,10 +1,12 @@
 variable "web_server_1" {}
 
-variable "web_server_2" {}
+# variable "web_server_2" {}
 
 variable "subnet_1" {}
 
-variable "subnet_2" {}
+# variable "subnet_2" {}
+
+# variable "all_subnets" {}
 
 variable "ami" {
   type        = string

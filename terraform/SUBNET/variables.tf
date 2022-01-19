@@ -8,7 +8,7 @@ variable "subnet_1" {
   description = " ID for Subnet-1"
 }
 
-variable "subnet_2" {
-  type        = string
-  description = "ID for Subnet-2"
-}
+# variable "subnet_2" {
+#   type        = string
+#   description = "ID for Subnet-2"
+# }
