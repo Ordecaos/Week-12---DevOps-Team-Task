@@ -29,6 +29,15 @@ resource "aws_subnet" "subnet_1" {
   }
 }
 
+# resource "aws_subnet" "subnet_2" {
+#   vpc_id            = var.vpc_id
+#   cidr_block        = var.vpc_cidr_block
+#   availability_zone = "eu-west-2b"
+
+#   tags = {
+#     Name = "Subnet-2"
+#   }
+# }
 
 # ROUTE TABLE ASSOCIATION
 

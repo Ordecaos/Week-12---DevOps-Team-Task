@@ -6,8 +6,6 @@ variable "subnet_1" {}
 
 # variable "subnet_2" {}
 
-# variable "all_subnets" {}
-
 variable "ami" {
   type        = string
   description = "Amazon Machine Image"

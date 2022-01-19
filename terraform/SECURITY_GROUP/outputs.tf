@@ -10,6 +10,6 @@ output "web_traffic" {
   value = aws_security_group.web_traffic.id
 }
 
-output "eip_address" {
-  value = "10.0.1.50"
-}
+# output "eip_address" {
+#   value = "10.0.0.178"
+# }

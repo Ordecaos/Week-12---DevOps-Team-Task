@@ -20,7 +20,7 @@ module "instances" {
   source = "./EC2"
 
   subnet_1 = module.subnet.subnet_1
-  # subnet_2     = module.subnet.subnet_2
+  # subnet_2 = module.subnet.subnet_2
   # all_subnets  = module.subnet.all_subnets
   web_server_1 = module.security_groups.web_server_1
   # web_server_2 = module.security_groups.web_server_2
@@ -28,7 +28,7 @@ module "instances" {
 module "vpc" {
   source = "./VPC"
 
-  vpc_cidr_block = "10.0.0.0/24"
+  vpc_cidr_block = "10.1.0.0/24"
 }
 module "igw" {
   source = "./INTERNET_GATEWAY"
@@ -57,10 +57,6 @@ module "security_groups" {
   web_server_1 = module.security_groups.web_server_1
   # web_server_2 = module.security_groups.web_server_2
   web_traffic = module.security_groups.web_traffic
-}
-
-module "iam" {
-  source = "./IAM"
 }
 
 module "eks" {
