@@ -11,7 +11,7 @@ services:
 
   frontend:
     container_name: frontend
-    image: myounis789/frontend:latest
+    image: lordkalmed/frontend:latest
     build: ./spring-petclinic-angular
     ports:
       - published: 4200
@@ -21,7 +21,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: lordkalmed/nginx:latest
+    image: lordkalmed/nginx_live:latest
     build: ./NGINX
     ports:
       - published: 80
@@ -32,11 +32,3 @@ services:
         target: /etc/nginx/nginx.conf
     depends_on:
       - "backend"
-
-#  backend:
-#    container_name: backend
-#    image: lordkalmed/backend:latest
-#    build: ./spring-petclinic-rest
-#    ports:
-#      - published: 9966
-#        target: 9966
