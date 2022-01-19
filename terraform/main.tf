@@ -19,23 +19,43 @@ provider "aws" {
 module "instances" {
   source = "./EC2"
 
+  subnet_1     = module.subnet.subnet_1
+  subnet_2     = module.subnet.subnet_2
+  web_server_1 = module.security_groups.web_server_1
+  web_server_2 = module.security_groups.web_server_2
 }
 module "vpc" {
-  source          = "./VPC"
-  main_cidr_block = "10.0.0.0/24"
+  source = "./VPC"
+
+  vpc_cidr_block = "10.0.0.0/24"
 }
 module "igw" {
   source = "./INTERNET_GATEWAY"
-  vpc_id = module.vpc.vpc_id
+
+  vpc_id         = module.vpc.vpc_id
+  gateway_id     = module.igw.gw_id
+  route_table_id = module.igw.route_table_id
 }
 module "subnet" {
   source = "./SUBNET"
-  vpc_id = module.vpc.vpc_id
+
+  vpc_id         = module.vpc.vpc_id
+  vpc_cidr_block = module.vpc.vpc_cidr_block
+  route_table_id = module.igw.route_table_id
+  subnet_1       = module.subnet.subnet_1
+  subnet_2       = module.subnet.subnet_2
 }
 
 module "security_groups" {
   source = "./SECURITY_GROUP"
-  vpc_id = module.vpc.vpc_id
+
+  vpc_id       = module.vpc.vpc_id
+  gateway_id   = module.igw.gw_id
+  subnet_1     = module.subnet.subnet_1
+  subnet_2     = module.subnet.subnet_2
+  web_server_1 = module.security_groups.web_server_1
+  web_server_2 = module.security_groups.web_server_2
+  web_traffic  = module.security_groups.web_traffic
 }
 
 module "iam" {
