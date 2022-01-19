@@ -1,8 +1,8 @@
 docker system prune -a
-docker pull myounis789/petclinicmysql:latest
-docker pull myounis789/petclinicnginx:latest
-docker pull myounis789/petclinicrest:latest
-docker pull myounis789/petclinicangular:latest
+docker pull myounis789/angular:latest
+docker pull myounis789/mysql:latest
+docker pull myounis789/nginxpetclinic:latest
+docker pull myounis789/rest2:latest
 docker-compose up -d
 docker exec -it MySQL bash
 
