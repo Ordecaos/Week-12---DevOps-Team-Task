@@ -21,7 +21,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginxtest:latest
+    image: myounis789/petclinicnginx:latest
     build: ./NGINX
     ports:
       - published: 80
