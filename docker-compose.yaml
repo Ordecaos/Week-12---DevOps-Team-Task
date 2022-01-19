@@ -3,7 +3,7 @@ services:
 
   backend:
     container_name: backend
-    image: lordkalmed/backend:latest
+    image: myounis789/petclinicrest:latest
     build: ./spring-petclinic-rest
     ports:
       - published: 9966
@@ -32,3 +32,14 @@ services:
         target: /etc/nginx/nginx.conf
     depends_on:
       - "backend"
+
+  mysql:
+    container_name: MySQL
+    build: ./mysql
+    image: myounis789/petclinicmysql:latest
+    ports:
+    - target: 3306
+      published: 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=petclinic
+      - MYSQL_DATABASE=petclinic
