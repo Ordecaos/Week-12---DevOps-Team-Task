@@ -11,7 +11,7 @@ services:
 
   frontend:
     container_name: frontend
-    image: lordkalmed/frontend:latest
+    image: myounis789/petclinicangular:latest
     build: ./spring-petclinic-angular
     ports:
       - published: 4200
@@ -21,7 +21,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: lordkalmed/nginx_live:latest
+    image: nginxtest:latest
     build: ./NGINX
     ports:
       - published: 80
