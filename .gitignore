@@ -2,3 +2,4 @@ venv
 node_modules
 terraform/.terraform/providers/*
 terraform_test/.terraform/providers/*
+package-lock.json
