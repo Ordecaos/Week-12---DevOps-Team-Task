@@ -2,7 +2,7 @@ version: "3.8"
 services:
   frontend:
     container_name: frontend
-    image: lordkalmed/frontend:latest
+    image: myounis789/angular:latest
     build: ./spring-petclinic-angular
     ports:
       - published: 4200
@@ -12,7 +12,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: lordkalmed/frontend:latest
+    image: myounis789/nginxpetclinic:latest
     build: ./NGINX
     ports:
       - published: 80
@@ -26,7 +26,7 @@ services:
 
   backend:
     container_name: backend
-    image: myounis789/rest:latest
+    image: myounis789/rest2:lates
     build: ./spring-petclinic-rest
     ports:
       - published: 9966
