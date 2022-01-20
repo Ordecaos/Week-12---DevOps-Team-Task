@@ -16,6 +16,7 @@ pipeline {
 
         stage ('NG Tests'){
             steps{
+                sh "cd Week-12---DevOps-Team-Task"
                 sh "cd spring-petclinic-angular"
                 sh "ng test --watch=false"
                 sh "sudo npm run ng serve"
