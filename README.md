@@ -26,11 +26,11 @@ The Following individuals are a part of this team:
 
 * Bradley: Kubernetes Engineer
 
-* Chester: IaC Engineer
+* Chester: Daddy
 
 * Jack: Scrum Master/Project Lead
 
-* Mohammed: Debugger
+* Mohammed: Docker/Debugger
 
 ## Scope
 
