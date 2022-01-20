@@ -36,7 +36,7 @@ services:
   mysql:
     container_name: MySQL
     build: ./mysql
-    image: myounis789/mysql:latest
+    image: myounis789/mysql:latest 
     ports:
     - target: 3306
       published: 3306
