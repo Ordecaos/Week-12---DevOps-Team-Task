@@ -19,17 +19,11 @@
 
     <properties>
         <spring-data-jdbc.version>1.2.1.RELEASE</spring-data-jdbc.version>
-        <springfox-swagger.version>3.0.0</springfox-swagger.version>
-        <jacoco.version>0.8.7</jacoco.version>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+        <jacoco.version>0.8.5</jacoco.version>
+
         <docker.jib-maven-plugin.version>1.3.0</docker.jib-maven-plugin.version>
         <docker.image.prefix>springcommunity</docker.image.prefix>
-        <jsr305.version>3.0.2</jsr305.version>
-        <jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
-        <mapstruct.version>1.4.1.Final</mapstruct.version>
-        <m2e.apt.activation>jdt_apt</m2e.apt.activation>
-        <jaxb-api.version>2.3.0</jaxb-api.version>
-        <openapi-generator-maven-plugin.version>5.2.1</openapi-generator-maven-plugin.version>
-        <build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -129,30 +123,16 @@
             <artifactId>json-path</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>${springfox-swagger.version}</version>
-        </dependency>
 
         <dependency>
-            <groupId>org.openapitools</groupId>
-            <artifactId>jackson-databind-nullable</artifactId>
-            <version>${jackson-databind-nullable.version}</version>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${mapstruct.version}</version>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger.version}</version>
         </dependency>
 
         <dependency>
@@ -164,21 +144,12 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>${jaxb-api.version}</version>
+            <version>2.3.0</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -205,12 +176,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
-                <configuration>
-                    <excludes>
-                        <!-- Generated code -->
-                        <exclude>**/org/springframework/samples/petclinic/dto/**</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -235,12 +200,14 @@
                                         <limit>
                                             <counter>BRANCH</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.70</minimum>
+                                            <minimum>0.74</minimum>
                                         </limit>
                                     </limits>
-                                    </rule>
+                                    <excludes>
+                                        <!-- <exclude>com.xyz.ClassToExclude</exclude> -->
+                                    </excludes>
+                                </rule>
                             </rules>
-
                         </configuration>
                     </execution>
                     <execution>
@@ -267,90 +234,7 @@
                     </to>
                 </configuration>
             </plugin>
-
-
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <!-- RELEASE_VERSION -->
-                <version>${openapi-generator-maven-plugin.version}</version>
-                <!-- /RELEASE_VERSION -->
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/api-docs.yml</inputSpec>
-                            <modelPackage>org.springframework.samples.petclinic.dto</modelPackage>
-                            <generatorName>spring</generatorName>
-                            <library>spring-boot</library>
-
-                            <!-- Only enabling model generation -->
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <generateApiTests>false</generateApiTests>
-                            <generateModelDocumentation>false</generateModelDocumentation>
-                            <generateModelTests>false</generateModelTests>
-                            <generateApis>false</generateApis>
-                            <generateApiDocumentation>false</generateApiDocumentation>
-                            <generateModels>true</generateModels>
-                            <generateSupportingFiles>false</generateSupportingFiles>
-                            <!-- Activating JAVA8 features -->
-                            <configOptions>
-                                <performBeanValidation>true</performBeanValidation>
-                                <dateLibrary>java8</dateLibrary>
-                                <java8>true</java8>
-                                <openApiNullable>false</openApiNullable>
-                                <serializationLibrary>jackson</serializationLibrary>
-                            </configOptions>
-                            <!-- override the default library to jersey2 -->
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>${build-helper-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>target/generated-sources/openapi/src/main/java</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                    <compilerArgs>
-                        <compilerArg>
-                            -Amapstruct.suppressGeneratorTimestamp=true
-                        </compilerArg>
-                        <compilerArg>
-                            -Amapstruct.suppressGeneratorVersionInfoComment=true
-                        </compilerArg>
-                        <compilerArg>
-                            -Amapstruct.defaultComponentModel=spring
-                        </compilerArg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+
 </project>

@@ -1,5 +1,12 @@
 pipeline {
     agent any
+    //environment{
+    //    AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
+    //    AWS_SECRET_KEY_ID = credentials('aws_secret_key_id')
+    //    DOCKER_UNAME = credentials('docker_uname')
+    //    DOCKER_PWORD = credentials('docker_pword')
+            
+    //}
     stages{
         stage ('NG Tests'){
             steps{
@@ -8,22 +15,26 @@ pipeline {
                 sh "ng e2e"
             }
         }
-        stage ('Build and Push Images'){
-            environment{
-                DOCKER_UNAME = credentials('docker_uname')
-                DOCKER_PWORD = credentials('docker_pword')
-            }
+        stage ('Pull'){
             steps{
-                sh "docker-compise build --parallel"
-                sh "docker login -i $DOCKER_UNAME -p $DOCKER_PWORD"
-                sh "docker-compose push"
+                sh "docker pull myounis789/angular:latest"
+                sh "docker pull myounis789/mysql:latest"
+                sh "docker pull myounis789/nginxpetclinic:latest"
+                sh "docker pull myounis789/rest2:latest"
             }
         }
-        stage ('Manage confiruation & deploy'){
+        //stage ('Manage confiruation'){
+            //steps{
+            //    sh "cd terraform"
+            //    sh "terraform init"
+            //    sh "terraform plan"
+            //    sh "terraform apply"
+            //    sh "yes"
+            //}
+        //}
+        stage ('Deploy'){
             steps{
-                sh "terraform init"
-                sh "terraform plan"
-                sh "terraform apply"
+                sh "docker-compose up -d"
             }
         }
     }
