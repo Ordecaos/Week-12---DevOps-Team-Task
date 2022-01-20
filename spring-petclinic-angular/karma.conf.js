@@ -34,5 +34,11 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false
+
+    singleRun: true,
+    reporters: ['dots', 'junit'],
+    junitReporter: {
+      outputFile: 'test-results.xml'
+    },
   });
 };
