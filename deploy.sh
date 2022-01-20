@@ -15,6 +15,3 @@ node --version
 npm -v
 docker --version
 docker-compose -v
-
-# chmod u+x deploy.sh
-#./deploy.sh
