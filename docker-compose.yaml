@@ -22,7 +22,7 @@ services:
   nginx:
     container_name: nginx
     image: myounis789/nginxpetclinic:latest
-    build: ./NGINX
+    build: ./nginx
     ports:
       - published: 80
         target: 80
