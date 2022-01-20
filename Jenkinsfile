@@ -20,8 +20,8 @@ pipeline {
             steps{
                 sh "cd terraform"
                 sh "terraform init"
-                sh "terraform plan"
-                //sh "terraform apply"
+                //sh "terraform plan"
+                sh "terraform apply"
                 sh "yes"
             }
         }
