@@ -25,3 +25,9 @@ variable "instance_medium" {
   description = "Medium EC2 Instance"
   default     = "t2.medium"
 }
+
+variable "enable_public_ip" {
+  type        = bool
+  description = "Enable Public IP"
+  default     = true
+}

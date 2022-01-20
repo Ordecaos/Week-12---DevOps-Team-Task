@@ -1,8 +1,9 @@
 resource "aws_instance" "manager_node" {
-  ami                    = var.ami
-  instance_type          = var.instance_micro
-  subnet_id              = var.subnet_2
-  vpc_security_group_ids = [var.web_traffic]
+  ami                         = var.ami
+  instance_type               = var.instance_micro
+  subnet_id                   = var.subnet_2
+  vpc_security_group_ids      = [var.web_traffic]
+  associate_public_ip_address = var.enable_public_ip
   tags = {
     Name = "Manager Node"
   }
@@ -25,10 +26,11 @@ resource "aws_instance" "manager_node" {
 }
 
 resource "aws_instance" "worker_node" {
-  ami                    = var.ami
-  instance_type          = var.instance_micro
-  subnet_id              = var.subnet_2
-  vpc_security_group_ids = [var.web_traffic]
+  ami                         = var.ami
+  instance_type               = var.instance_micro
+  subnet_id                   = var.subnet_2
+  vpc_security_group_ids      = [var.web_traffic]
+  associate_public_ip_address = var.enable_public_ip
   tags = {
     Name = "Worker Node"
   }
@@ -51,10 +53,11 @@ resource "aws_instance" "worker_node" {
 }
 
 resource "aws_instance" "load_balancer" {
-  ami                    = var.ami
-  instance_type          = var.instance_micro
-  subnet_id              = var.subnet_1
-  vpc_security_group_ids = [var.web_traffic]
+  ami                         = var.ami
+  instance_type               = var.instance_micro
+  subnet_id                   = var.subnet_1
+  vpc_security_group_ids      = [var.web_traffic]
+  associate_public_ip_address = var.enable_public_ip
   # availability_zone = "eu-west-2a"
   key_name = "Dev"
 
