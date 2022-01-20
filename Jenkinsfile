@@ -16,9 +16,11 @@ pipeline {
 
         stage ('NG Tests'){
             steps{
-                sh "sudo npm run ng test"
+                sh "cd spring-petclinic-angular"
+                sh "ng test --watch=false"
                 sh "sudo npm run ng serve"
                 sh "sudo npm run ng e2e"
+                sh "cd .."
             }
         }
         stage ('Pull'){
