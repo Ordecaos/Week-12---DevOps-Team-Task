@@ -121,6 +121,8 @@ The following images displays the application through various days of working.
 
 ![Day 5](https://github.com/Ordecaos/Week-12---DevOps-Team-Task/blob/Jack/Images/Day5.png?raw=true)
 
+![Day 6]()
+
 The Following Image displays the feature branch model within Git:
 
 ![Branch]()
@@ -156,4 +158,4 @@ In retrospect, when looking back and the project we as a team believe that we di
 
 ## Future Developments
 
-If we were to take this project into the future
+If we were to take this project into the future 
