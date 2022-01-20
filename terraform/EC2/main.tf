@@ -86,39 +86,3 @@ resource "aws_instance" "load_balancer" {
   }
 }
 
-
-
-
-
-
-
-# resource "aws_instance" "jenkins" {
-#   ami               = var.ami
-#   instance_type     = var.instance_medium
-#   availability_zone = "eu-west-2b"
-#   # subnet_id     = var.subnet_1
-#   key_name  = "Dev"
-#   user_data = <<-EOF
-#             #!/bin/bash
-#             sudo apt update -y
-#             sudo apt upgrade
-#             sudo apt install -y curl jq
-#             curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-#             sudo apt install -y nodejs
-#             sudo apt install -y npm
-#             curl https://get.docker.com | sudo bash
-#             version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
-#             sudo curl -L "https://github.com/docker/compose/releases/download/2.1.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
-#             sudo chmod +x /usr/bin/docker-compose
-#             EOF
-
-#   network_interface {
-#     device_index         = 1
-#     network_interface_id = var.web_server_2
-
-#   }
-#   # for_each          = data.aws_subnet.all_subnets.id[*]
-#   tags = {
-#     Name = "CI/CD Server"
-#   }
-# }
