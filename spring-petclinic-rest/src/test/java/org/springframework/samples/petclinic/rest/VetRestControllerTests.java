@@ -16,7 +16,18 @@
 
 package org.springframework.samples.petclinic.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,10 +35,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.samples.petclinic.mapper.VetMapper;
 import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.samples.petclinic.service.clinicService.ApplicationTestConfig;
+import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -35,12 +45,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Test class for {@link VetRestController}
@@ -55,9 +60,6 @@ public class VetRestControllerTests {
 
     @Autowired
     private VetRestController vetRestController;
-
-    @Autowired
-    private VetMapper vetMapper;
 
 	@MockBean
     private ClinicService clinicService;
@@ -144,7 +146,7 @@ public class VetRestControllerTests {
     	Vet newVet = vets.get(0);
     	newVet.setId(999);
     	ObjectMapper mapper = new ObjectMapper();
-        String newVetAsJSON = mapper.writeValueAsString(vetMapper.toVetDto(newVet));
+    	String newVetAsJSON = mapper.writeValueAsString(newVet);
     	this.mockMvc.perform(post("/api/vets/")
     		.content(newVetAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
     		.andExpect(status().isCreated());
@@ -157,7 +159,7 @@ public class VetRestControllerTests {
     	newVet.setId(null);
     	newVet.setFirstName(null);
     	ObjectMapper mapper = new ObjectMapper();
-        String newVetAsJSON = mapper.writeValueAsString(vetMapper.toVetDto(newVet));
+    	String newVetAsJSON = mapper.writeValueAsString(newVet);
     	this.mockMvc.perform(post("/api/vets/")
         		.content(newVetAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
         		.andExpect(status().isBadRequest());
@@ -170,7 +172,7 @@ public class VetRestControllerTests {
     	Vet newVet = vets.get(0);
     	newVet.setFirstName("James");
     	ObjectMapper mapper = new ObjectMapper();
-        String newVetAsJSON = mapper.writeValueAsString(vetMapper.toVetDto(newVet));
+    	String newVetAsJSON = mapper.writeValueAsString(newVet);
     	this.mockMvc.perform(put("/api/vets/1")
     		.content(newVetAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
         	.andExpect(content().contentType("application/json"))
@@ -189,9 +191,9 @@ public class VetRestControllerTests {
     @WithMockUser(roles="VET_ADMIN")
     public void testUpdateVetError() throws Exception {
     	Vet newVet = vets.get(0);
-    	newVet.setFirstName(null);
+    	newVet.setFirstName("");
     	ObjectMapper mapper = new ObjectMapper();
-        String newVetAsJSON = mapper.writeValueAsString(vetMapper.toVetDto(newVet));
+    	String newVetAsJSON = mapper.writeValueAsString(newVet);
     	this.mockMvc.perform(put("/api/vets/1")
     		.content(newVetAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
         	.andExpect(status().isBadRequest());
@@ -202,7 +204,7 @@ public class VetRestControllerTests {
     public void testDeleteVetSuccess() throws Exception {
     	Vet newVet = vets.get(0);
     	ObjectMapper mapper = new ObjectMapper();
-        String newVetAsJSON = mapper.writeValueAsString(vetMapper.toVetDto(newVet));
+    	String newVetAsJSON = mapper.writeValueAsString(newVet);
     	given(this.clinicService.findVetById(1)).willReturn(vets.get(0));
     	this.mockMvc.perform(delete("/api/vets/1")
     		.content(newVetAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -214,7 +216,7 @@ public class VetRestControllerTests {
     public void testDeleteVetError() throws Exception {
     	Vet newVet = vets.get(0);
     	ObjectMapper mapper = new ObjectMapper();
-        String newVetAsJSON = mapper.writeValueAsString(vetMapper.toVetDto(newVet));
+    	String newVetAsJSON = mapper.writeValueAsString(newVet);
     	given(this.clinicService.findVetById(-1)).willReturn(null);
     	this.mockMvc.perform(delete("/api/vets/-1")
     		.content(newVetAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -222,3 +224,4 @@ public class VetRestControllerTests {
     }
 
 }
+

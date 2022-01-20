@@ -3,13 +3,14 @@ kind: ConfigMap
 metadata:
   name: nginx-config
 data:
-  default.conf: | # in YAML syntax, | indicates a multi-line string
-    server {
+  default.conf: |
+        server {
             listen 80;
             location / {
-                proxy_pass http://frontend:8080/;
+              proxy_pass http://frontend:4200/;
             }
             location /petclinic/api {
-                proxy_pass http://backend:9966/petclinic/api/;
+              proxy_pass http://backend:9966/petclinic/api/;
             }
         }
+      
