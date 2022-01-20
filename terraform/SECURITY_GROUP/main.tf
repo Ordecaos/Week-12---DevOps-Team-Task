@@ -69,8 +69,13 @@ resource "aws_security_group" "web_traffic" {
 
 resource "aws_network_interface" "web_server_1" {
   subnet_id       = var.subnet_1
-  private_ips     = ["10.0.0.178"]
+  private_ips     = ["10.1.0.50", "10.1.0.51"]
   security_groups = [var.web_traffic]
+
+  attachment {
+    instance     = var.load_balancer
+    device_index = 1
+  }
 
   tags = {
     Name = "Main Web Server"
@@ -79,7 +84,7 @@ resource "aws_network_interface" "web_server_1" {
 
 # resource "aws_network_interface" "web_server_2" {
 #   subnet_id       = var.subnet_2
-#   private_ips     = ["10.0.1.51"]
+#   private_ips     = ["10.1.0.51"]
 #   security_groups = [var.web_traffic]
 # }
 
@@ -102,4 +107,4 @@ resource "aws_eip" "eip1" {
 #   network_interface = var.web_server_2
 #   # associate_with_private_ip = "10.0.0.179"
 #   depends_on = [var.gateway_id]
-#   }
+# }
