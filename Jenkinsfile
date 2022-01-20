@@ -8,7 +8,7 @@ pipeline {
             
     }
     stages{
-        
+
         stage ('Pull'){
             steps {
                 sh "docker-compose build --parallel"
@@ -21,7 +21,7 @@ pipeline {
                 sh "cd terraform"
                 sh "terraform init"
                 sh "terraform plan"
-                sh "terraform apply"
+                //sh "terraform apply"
                 sh "yes"
             }
         }
