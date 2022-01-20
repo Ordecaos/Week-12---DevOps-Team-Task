@@ -1,12 +1,12 @@
 pipeline {
     agent any
-    environment{
+    //environment{
     //    AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
     //    AWS_SECRET_KEY_ID = credentials('aws_secret_key_id')
     //    DOCKER_UNAME = credentials('docker_uname')
     //    DOCKER_PWORD = credentials('docker_pword')
             
-    }
+    //}
     stages{
         stage ('NG Tests'){
             steps{
