@@ -9,9 +9,8 @@ pipeline {
             steps{
                 sh "cd terraform"
                 sh "terraform init"
-                //sh "terraform plan"
-                sh "terraform apply"
-                sh "yes"
+                sh "terraform plan"
+                sh "terraform apply --auto-approve"
             }
         }
     }
