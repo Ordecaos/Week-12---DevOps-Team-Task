@@ -14,6 +14,7 @@ pipeline {
                 sh "ng serve"
                 sh "ng e2e"
             }
+        }
         stage ('Pull'){
             steps{
                 sh "docker pull myounis789/angular:latest"
@@ -31,7 +32,7 @@ pipeline {
             //    sh "yes"
             //}
         //}
-        stage ('Deploy')
+        stage ('Deploy'){
             steps{
                 sh "docker-compose up -d"
             }
