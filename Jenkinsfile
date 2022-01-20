@@ -10,7 +10,11 @@ pipeline {
                 sh "cd terraform"
                 sh "terraform init"
                 sh "terraform plan"
+<<<<<<< HEAD
                 sh "terraform apply --auto -approve"
+=======
+                sh "terraform apply --auto-approve"
+>>>>>>> 7b5aa7d9d70d8aa5ceb3010ce8fc9e4d94136b4b
             }
         }
     }

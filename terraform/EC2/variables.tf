@@ -1,10 +1,12 @@
-variable "web_server_1" {}
+# variable "web_server_1" {}
 
 # variable "web_server_2" {}
 
 variable "subnet_1" {}
 
-# variable "subnet_2" {}
+variable "subnet_2" {}
+
+variable "web_traffic" {}
 
 variable "ami" {
   type        = string
@@ -22,4 +24,10 @@ variable "instance_medium" {
   type        = string
   description = "Medium EC2 Instance"
   default     = "t2.medium"
+}
+
+variable "enable_public_ip" {
+  type        = bool
+  description = "Enable Public IP"
+  default     = true
 }

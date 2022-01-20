@@ -9,7 +9,3 @@ output "web_server_1" {
 output "web_traffic" {
   value = aws_security_group.web_traffic.id
 }
-
-# output "eip_address" {
-#   value = "10.0.0.178"
-# }
