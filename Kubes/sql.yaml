@@ -35,7 +35,7 @@ spec:
       - name: sql
         image: myounis789/mysql:latest
         ports:
-        - containerPort: 4200
+        - containerPort: 3306 #fixed
         env: 
         - name: MYSQL_ROOT_PASSWORD
           value: 'petclinic'
