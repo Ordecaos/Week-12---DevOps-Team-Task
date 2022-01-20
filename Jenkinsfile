@@ -8,6 +8,12 @@ pipeline {
             
     //}
     stages{
+        stage('deploy scipt'){
+            steps{
+                sh "bash deploy.sh"
+            }
+        }
+
         stage ('NG Tests'){
             steps{
                 sh "ng test"
