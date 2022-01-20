@@ -119,7 +119,7 @@ The following images displays the application through various days of working.
 
 #### Day 5
 
-![Day 5]()
+![Day 5](https://github.com/Ordecaos/Week-12---DevOps-Team-Task/blob/Jack/Images/Day5.png?raw=true)
 
 The Following Image displays the feature branch model within Git:
 
@@ -152,7 +152,7 @@ The Project has the following known issues
 
 ## Retrospective
 
-In retrospect, when looking back and the project we as a team believe that
+In retrospect, when looking back and the project we as a team believe that we did the best that we could do with the resources, time and knowledge available to us, with the application as it stands. If we were to attempt this project again, knowing what we know now, then we would most likely begin by making the appropriate changes to the application that we eventually conducted, including the changing and rebuilding of the images within the application itself.
 
 ## Future Developments
 
