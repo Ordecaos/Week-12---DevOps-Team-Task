@@ -16,6 +16,8 @@ pipeline {
 
         stage ('NG Tests'){
             steps{
+                sh "cd"
+                sh "cd ubuntu"
                 sh "cd Week-12---DevOps-Team-Task"
                 sh "cd spring-petclinic-angular"
                 sh "ng test --watch=false"
