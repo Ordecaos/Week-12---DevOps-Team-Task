@@ -12,6 +12,7 @@ A repository for the Week 12 QA Academy DevOps team task
 * [Costs of the Project](#Costs-Of-The-Project)
 * [Current State](#Current-State)
 * [Known Issues](#Known-Issues)
+* [How to run the Project](How-to-run-the-Project)
 * [Retrospective](#Retrospective)
 * [Future Development](#Future-Development)
 
@@ -121,8 +122,6 @@ The following images displays the application through various days of working.
 
 ![Day 5](https://github.com/Ordecaos/Week-12---DevOps-Team-Task/blob/Jack/Images/Day5.png?raw=true)
 
-![Day 6]()
-
 The Following Image displays the feature branch model within Git:
 
 ![Branch]()
@@ -146,11 +145,17 @@ This cost is estimated by our percieved needs with the project which is three mi
 
 ## Current State
 
-The current state of the project is
+The current state of the project is that it will deploy sucessfully from Jenkins, using a load balancer as well as two VM's to run containers. The application does not test when deploying.
 
 ## Known Issues
 
-The Project has the following known issues
+The Project has the following known issues:
+
+* The application does not test.
+
+## How to run the Project
+
+In order to run this application, you simply need to use 'terraform init', followed by 'terraform plan' and finally 'terraform apply --auto -approve'. This will initialise terraform, have it plan out the resources needed and finally apply it, automatically approving it.
 
 ## Retrospective
 
@@ -158,4 +163,4 @@ In retrospect, when looking back and the project we as a team believe that we di
 
 ## Future Developments
 
-If we were to take this project into the future 
+If we were to take this project into the future, we could focus on making the ci/cd pipeline more robust, allowing it to test the application with unit tests and end to end.
