@@ -16,9 +16,9 @@ pipeline {
 
         stage ('NG Tests'){
             steps{
-                sh "ng test"
-                sh "ng serve"
-                sh "ng e2e"
+                sh "npm run ng build"
+                sh "npm run ng serve"
+                sh "npm run ng e2e"
             }
         }
         stage ('Pull'){
