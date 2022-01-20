@@ -33,6 +33,6 @@ spec:
     spec:
       containers:
       - name: backend
-        image: lordkalmed/backend:latest #myounis789/rest:latest
+        image: myounis789/rest2:latest #myounis789/rest:latest
         ports:
-        - containerPort: 80
+        - containerPort: 9966
