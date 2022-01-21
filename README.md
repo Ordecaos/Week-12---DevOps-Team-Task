@@ -124,7 +124,7 @@ The following images displays the application through various days of working.
 
 The Following Image displays the feature branch model within Git:
 
-![Branch]()
+![Branch](https://cdn.discordapp.com/attachments/930849786637209670/934019472346472448/EDWI0CAAAECBAgQIECAAAECBAgQIECAwCfwAKCTAqy4Z0DMAAAAAElFTkSuQmCC.png)
 
 ## Costs of the Project
 
