@@ -82,29 +82,14 @@ resource "aws_network_interface" "web_server_1" {
   }
 }
 
-# resource "aws_network_interface" "web_server_2" {
-#   subnet_id       = var.subnet_2
-#   private_ips     = ["10.1.0.51"]
-#   security_groups = [var.web_traffic]
-# }
-
 
 resource "aws_eip" "eip1" {
   vpc               = true
   network_interface = var.web_server_1
   # associate_with_private_ip = "10.0.0.178"
-  depends_on = [var.gateway_id]
+  depends_on = [var.gateway_id, var.load_balancer]
 
   tags = {
     Name = "Custom Elastic IP"
   }
 }
-
-
-
-# resource "aws_eip" "eip2" {
-#   vpc               = true
-#   network_interface = var.web_server_2
-#   # associate_with_private_ip = "10.0.0.179"
-#   depends_on = [var.gateway_id]
-# }

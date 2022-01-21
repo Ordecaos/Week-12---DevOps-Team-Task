@@ -62,6 +62,11 @@ module "security_groups" {
 
 module "eks" {
   source = "./EKS"
+
+  subnet_1             = module.subnet.subnet_1
+  subnet_2             = module.subnet.subnet_2
+  cluster_iam_role_arn = module.iam.cluster_iam_role
+  node_iam_role_arn    = module.iam.node_iam_role
 }
 
 module "iam" {
