@@ -7,11 +7,14 @@ pipeline {
     stages{
         stage ('Manage confiruation & Deploy'){
             steps{
-                sh "cd terraform"
-                sh "terraform init"
-                sh "terraform plan"
-                sh "terraform apply --auto-approve"
-
+                sh "/terraform/terraform init"
+                sh "/terraform/terraform plan"
+                sh "/terraform/terraform apply --auto-approve"
+            }
+        }
+        stage ("Kubes"){
+            steps{
+                sh "/Kubes/kubectl apply -f ."
             }
         }
     }
