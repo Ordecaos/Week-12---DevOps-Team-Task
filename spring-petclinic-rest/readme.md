@@ -1,6 +1,4 @@
-# REST version of Spring PetClinic Sample Application (spring-framework-petclinic extend ) 
-
-[![Build Status](https://github.com/spring-petclinic/spring-petclinic-rest/actions/workflows/maven-build.yml/badge.svg)](https://github.com/spring-petclinic/spring-petclinic-rest/actions/workflows/maven-build.yml)
+# REST version of Spring PetClinic Sample Application (spring-framework-petclinic extend ) [![Build Status](https://travis-ci.org/spring-petclinic/spring-petclinic-rest.png?branch=master)](https://travis-ci.org/spring-petclinic/spring-petclinic-rest/)
 
 This backend version of the Spring Petclinic application only provides a REST API. **There is no UI**.
 The [spring-petclinic-angular project](https://github.com/spring-petclinic/spring-petclinic-angular) is a Angular front-end application which consumes the REST API.
@@ -33,12 +31,8 @@ There are actuator health check and info routes as well:
 * [http://localhost:9966/petclinic/actuator/health](http://localhost:9966/petclinic/actuator/health)
 * [http://localhost:9966/petclinic/actuator/info](http://localhost:9966/petclinic/actuator/info)
 
-## OpenAPI REST API documentation presented here (after application start):
-
-You can reach the swagger UI with this URL
-[http://localhost:9966/petclinic/](http://localhost:9966/petclinic/swagger-ui.html).
-
-You then can get the Open API description reaching this URL [localhost:9966/petclinic/v3/api-docs](localhost:9966/petclinic/v3/api-docs).
+## Swagger REST API documentation presented here (after application start):
+[http://localhost:9966/petclinic/swagger-ui.html](http://localhost:9966/petclinic/swagger-ui.html)
 
 ## Screenshot of the Angular client
 

@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+
+  backend:
+    container_name: backend
+    image: myounis789/rest2:latest
+    build: ./spring-petclinic-rest
+    ports:
+      - published: 9966
+        target: 9966
+
+  frontend:
+    container_name: frontend
+    image: myounis789/angular:latest
+    build: ./spring-petclinic-angular
+    ports:
+      - published: 4200
+        target: 4200
+    depends_on:
+      - "backend"
+
+  nginx:
+    container_name: nginx
+    image: myounis789/nginxpetclinic:latest
+    build: ./nginx
+    ports:
+      - published: 80
+        target: 80
+    volumes:
+      - type: bind
+        source: ./nginx/nginx.conf
+        target: /etc/nginx/nginx.conf
+    depends_on:
+      - "backend"
+
+  mysql:
+    container_name: MySQL
+    build: ./mysql
+    image: myounis789/mysql:latest 
+    ports:
+    - target: 3306
+      published: 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=petclinic
+      - MYSQL_DATABASE=petclinic

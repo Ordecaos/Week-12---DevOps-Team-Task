@@ -15,11 +15,24 @@
  */
 package org.springframework.samples.petclinic.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.samples.petclinic.rest.JacksonCustomVisitDeserializer;
+import org.springframework.samples.petclinic.rest.JacksonCustomVisitSerializer;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Simple JavaBean domain object representing a visit.
@@ -28,13 +41,18 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "visits")
+@JsonSerialize(using = JacksonCustomVisitSerializer.class)
+@JsonDeserialize(using = JacksonCustomVisitDeserializer.class)
 public class Visit extends BaseEntity {
 
     /**
      * Holds value of property date.
      */
-    @Column(name = "visit_date", columnDefinition = "DATE")
-    private LocalDate date;
+    @Column(name = "visit_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd")
+    private Date date;
 
     /**
      * Holds value of property description.
@@ -55,7 +73,7 @@ public class Visit extends BaseEntity {
      * Creates a new instance of Visit for the current date
      */
     public Visit() {
-        this.date = LocalDate.now();
+        this.date = new Date();
     }
 
 
@@ -64,7 +82,7 @@ public class Visit extends BaseEntity {
      *
      * @return Value of property date.
      */
-    public LocalDate getDate() {
+    public Date getDate() {
         return this.date;
     }
 
@@ -73,7 +91,7 @@ public class Visit extends BaseEntity {
      *
      * @param date New value of property date.
      */
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

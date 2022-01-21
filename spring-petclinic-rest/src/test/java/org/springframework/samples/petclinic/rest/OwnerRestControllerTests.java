@@ -16,9 +16,17 @@
 
 package org.springframework.samples.petclinic.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,14 +34,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.samples.petclinic.dto.OwnerDto;
-import org.springframework.samples.petclinic.dto.PetDto;
-import org.springframework.samples.petclinic.dto.PetTypeDto;
-import org.springframework.samples.petclinic.dto.VisitDto;
-import org.springframework.samples.petclinic.mapper.OwnerMapper;
 import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.clinicService.ApplicationTestConfig;
+import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -41,19 +47,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 /**
@@ -63,58 +57,94 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ApplicationTestConfig.class)
+@ContextConfiguration(classes=ApplicationTestConfig.class)
 @WebAppConfiguration
 public class OwnerRestControllerTests {
 
     @Autowired
     private OwnerRestController ownerRestController;
 
-    @Autowired
-    OwnerMapper ownerMapper;
-
     @MockBean
     private ClinicService clinicService;
 
     private MockMvc mockMvc;
 
-    private List<OwnerDto> owners;
+    private List<Owner> owners;
 
     @Before
-    public void initOwners() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(ownerRestController)
-            .setControllerAdvice(new ExceptionControllerAdvice())
-            .build();
-        owners = new ArrayList<OwnerDto>();
+    public void initOwners(){
+    	this.mockMvc = MockMvcBuilders.standaloneSetup(ownerRestController)
+    			.setControllerAdvice(new ExceptionControllerAdvice())
+    			.build();
+    	owners = new ArrayList<Owner>();
 
-        OwnerDto ownerWithPet = new OwnerDto();
-        owners.add(ownerWithPet.id(1).firstName("George").lastName("Franklin").address("110 W. Liberty St.").city("Madison").telephone("6085551023").addPetsItem(getTestPetWithIdAndName(ownerWithPet, 1, "Rosy")));
-        OwnerDto owner = new OwnerDto();
-        owners.add(owner.id(2).firstName("Betty").lastName("Davis").address("638 Cardinal Ave.").city("Sun Prairie").telephone("6085551749"));
-        owner = new OwnerDto();
-        owners.add(owner.id(3).firstName("Eduardo").lastName("Rodriquez").address("2693 Commerce St.").city("McFarland").telephone("6085558763"));
-        owner = new OwnerDto();
-        owners.add(owner.id(4).firstName("Harold").lastName("Davis").address("563 Friendly St.").city("Windsor").telephone("6085553198"));
+    	Owner ownerWithPet = new Owner();
+    	ownerWithPet.setId(1);
+    	ownerWithPet.setFirstName("George");
+    	ownerWithPet.setLastName("Franklin");
+    	ownerWithPet.setAddress("110 W. Liberty St.");
+    	ownerWithPet.setCity("Madison");
+    	ownerWithPet.setTelephone("6085551023");
+    	ownerWithPet.addPet(getTestPetWithIdAndName(ownerWithPet, 1, "Rosy"));
+    	owners.add(ownerWithPet);
+
+        Owner owner = new Owner();
+    	owner.setId(2);
+    	owner.setFirstName("Betty");
+    	owner.setLastName("Davis");
+    	owner.setAddress("638 Cardinal Ave.");
+    	owner.setCity("Sun Prairie");
+    	owner.setTelephone("6085551749");
+    	owners.add(owner);
+
+    	owner = new Owner();
+    	owner.setId(3);
+    	owner.setFirstName("Eduardo");
+    	owner.setLastName("Rodriquez");
+    	owner.setAddress("2693 Commerce St.");
+    	owner.setCity("McFarland");
+    	owner.setTelephone("6085558763");
+    	owners.add(owner);
+
+    	owner = new Owner();
+    	owner.setId(4);
+    	owner.setFirstName("Harold");
+    	owner.setLastName("Davis");
+    	owner.setAddress("563 Friendly St.");
+    	owner.setCity("Windsor");
+    	owner.setTelephone("6085553198");
+    	owners.add(owner);
     }
 
-    private PetDto getTestPetWithIdAndName(final OwnerDto owner, final int id, final String name) {
-        PetTypeDto petType = new PetTypeDto();
-        PetDto pet = new PetDto();
-        pet.id(id).name(name).birthDate(LocalDate.now()).type(petType.id(2).name("dog")).addVisitsItem(getTestVisitForPet(pet, 1));
+    private Pet getTestPetWithIdAndName(final Owner owner, final int id, final String name) {
+        PetType petType = new PetType();
+        petType.setId(2);
+        petType.setName("dog");
+        Pet pet = new Pet();
+        pet.setId(id);
+        pet.setName(name);
+        pet.setBirthDate(new Date());
+        pet.setOwner(owner);
+        pet.setType(petType);
+        pet.addVisit(getTestVisitForPet(pet, 1));
         return pet;
     }
 
-    private VisitDto getTestVisitForPet(final PetDto pet, final int id) {
-        VisitDto visit = new VisitDto();
-        return visit.id(id).date(LocalDate.now()).description("test" + id);
+    private Visit getTestVisitForPet(final Pet pet, final int id) {
+        Visit visit = new Visit();
+        visit.setId(id);
+        visit.setPet(pet);
+        visit.setDate(new Date());
+        visit.setDescription("test" + id);
+        return visit;
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testGetOwnerSuccess() throws Exception {
-        given(this.clinicService.findOwnerById(1)).willReturn(ownerMapper.toOwner(owners.get(0)));
+    	given(this.clinicService.findOwnerById(1)).willReturn(owners.get(0));
         this.mockMvc.perform(get("/api/owners/1")
-                .accept(MediaType.APPLICATION_JSON_VALUE))
+        	.accept(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
             .andExpect(jsonPath("$.id").value(1))
@@ -122,22 +152,22 @@ public class OwnerRestControllerTests {
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testGetOwnerNotFound() throws Exception {
-        given(this.clinicService.findOwnerById(-1)).willReturn(null);
+    	given(this.clinicService.findOwnerById(-1)).willReturn(null);
         this.mockMvc.perform(get("/api/owners/-1")
-                .accept(MediaType.APPLICATION_JSON))
+        	.accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testGetOwnersListSuccess() throws Exception {
-        owners.remove(0);
-        owners.remove(1);
-        given(this.clinicService.findOwnerByLastName("Davis")).willReturn(ownerMapper.toOwners(owners));
+    	owners.remove(0);
+    	owners.remove(1);
+    	given(this.clinicService.findOwnerByLastName("Davis")).willReturn(owners);
         this.mockMvc.perform(get("/api/owners/*/lastname/Davis")
-                .accept(MediaType.APPLICATION_JSON))
+        	.accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
             .andExpect(jsonPath("$.[0].id").value(2))
@@ -147,23 +177,23 @@ public class OwnerRestControllerTests {
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testGetOwnersListNotFound() throws Exception {
-        owners.clear();
-        given(this.clinicService.findOwnerByLastName("0")).willReturn(ownerMapper.toOwners(owners));
+    	owners.clear();
+    	given(this.clinicService.findOwnerByLastName("0")).willReturn(owners);
         this.mockMvc.perform(get("/api/owners/?lastName=0")
-                .accept(MediaType.APPLICATION_JSON))
+        	.accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testGetAllOwnersSuccess() throws Exception {
-        owners.remove(0);
-        owners.remove(1);
-        given(this.clinicService.findAllOwners()).willReturn(ownerMapper.toOwners(owners));
+    	owners.remove(0);
+    	owners.remove(1);
+    	given(this.clinicService.findAllOwners()).willReturn(owners);
         this.mockMvc.perform(get("/api/owners/")
-                .accept(MediaType.APPLICATION_JSON))
+        	.accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
             .andExpect(jsonPath("$.[0].id").value(2))
@@ -173,175 +203,164 @@ public class OwnerRestControllerTests {
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testGetAllOwnersNotFound() throws Exception {
-        owners.clear();
-        given(this.clinicService.findAllOwners()).willReturn(ownerMapper.toOwners(owners));
+    	owners.clear();
+    	given(this.clinicService.findAllOwners()).willReturn(owners);
         this.mockMvc.perform(get("/api/owners/")
-                .accept(MediaType.APPLICATION_JSON))
+        	.accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testCreateOwnerSuccess() throws Exception {
-        OwnerDto newOwnerDto = owners.get(0);
-        newOwnerDto.setId(null);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        String newOwnerAsJSON = mapper.writeValueAsString(newOwnerDto);
-        this.mockMvc.perform(post("/api/owners/")
-                .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isCreated());
+    	Owner newOwner = owners.get(0);
+    	newOwner.setId(null);
+    	ObjectMapper mapper = new ObjectMapper();
+    	String newOwnerAsJSON = mapper.writeValueAsString(newOwner);
+    	this.mockMvc.perform(post("/api/owners/")
+    		.content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+    		.andExpect(status().isCreated());
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testCreateOwnerErrorIdSpecified() throws Exception {
-        OwnerDto newOwnerDto = owners.get(0);
-        newOwnerDto.setId(999);
+        Owner newOwner = owners.get(0);
+        newOwner.setId(999);
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        String newOwnerAsJSON = mapper.writeValueAsString(newOwnerDto);
+        String newOwnerAsJSON = mapper.writeValueAsString(newOwner);
         this.mockMvc.perform(post("/api/owners/")
-                .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+            .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isBadRequest())
             .andExpect(header().string("errors",
                 "[{\"objectName\":\"body\",\"fieldName\":\"id\",\"fieldValue\":\"999\",\"errorMessage\":\"must not be specified\"}]"));
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testCreateOwnerError() throws Exception {
-        OwnerDto newOwnerDto = owners.get(0);
-        newOwnerDto.setId(null);
-        newOwnerDto.setFirstName(null);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        String newOwnerAsJSON = mapper.writeValueAsString(newOwnerDto);
-        this.mockMvc.perform(post("/api/owners/")
-                .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isBadRequest());
-    }
+    	Owner newOwner = owners.get(0);
+    	newOwner.setId(null);
+    	newOwner.setFirstName(null);
+    	ObjectMapper mapper = new ObjectMapper();
+    	String newOwnerAsJSON = mapper.writeValueAsString(newOwner);
+    	this.mockMvc.perform(post("/api/owners/")
+        		.content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+        		.andExpect(status().isBadRequest());
+     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testUpdateOwnerSuccess() throws Exception {
-        given(this.clinicService.findOwnerById(1)).willReturn(ownerMapper.toOwner(owners.get(0)));
+        given(this.clinicService.findOwnerById(1)).willReturn(owners.get(0));
         int ownerId = owners.get(0).getId();
-        OwnerDto updatedOwnerDto = new OwnerDto();
+        Owner updatedOwner = new Owner();
         // body.id = ownerId which is used in url path
-        updatedOwnerDto.setId(ownerId);
-        updatedOwnerDto.setFirstName("GeorgeI");
-        updatedOwnerDto.setLastName("Franklin");
-        updatedOwnerDto.setAddress("110 W. Liberty St.");
-        updatedOwnerDto.setCity("Madison");
-        updatedOwnerDto.setTelephone("6085551023");
+        updatedOwner.setId(ownerId);
+        updatedOwner.setFirstName("George I");
+        updatedOwner.setLastName("Franklin");
+        updatedOwner.setAddress("110 W. Liberty St.");
+        updatedOwner.setCity("Madison");
+        updatedOwner.setTelephone("6085551023");
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        String newOwnerAsJSON = mapper.writeValueAsString(updatedOwnerDto);
+        String newOwnerAsJSON = mapper.writeValueAsString(updatedOwner);
         this.mockMvc.perform(put("/api/owners/" + ownerId)
-                .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+            .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().contentType("application/json"))
             .andExpect(status().isNoContent());
 
         this.mockMvc.perform(get("/api/owners/" + ownerId)
-                .accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON_VALUE))
+            .accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
             .andExpect(jsonPath("$.id").value(ownerId))
-            .andExpect(jsonPath("$.firstName").value("GeorgeI"));
+            .andExpect(jsonPath("$.firstName").value("George I"));
 
     }
-
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testUpdateOwnerSuccessNoBodyId() throws Exception {
-        given(this.clinicService.findOwnerById(1)).willReturn(ownerMapper.toOwner(owners.get(0)));
+    	given(this.clinicService.findOwnerById(1)).willReturn(owners.get(0));
         int ownerId = owners.get(0).getId();
-        OwnerDto updatedOwnerDto = new OwnerDto();
-        updatedOwnerDto.setFirstName("GeorgeI");
-        updatedOwnerDto.setLastName("Franklin");
-        updatedOwnerDto.setAddress("110 W. Liberty St.");
-        updatedOwnerDto.setCity("Madison");
+        Owner updatedOwner = new Owner();
+        updatedOwner.setFirstName("George I");
+        updatedOwner.setLastName("Franklin");
+        updatedOwner.setAddress("110 W. Liberty St.");
+        updatedOwner.setCity("Madison");
+        updatedOwner.setTelephone("6085551023");
+    	ObjectMapper mapper = new ObjectMapper();
+    	String newOwnerAsJSON = mapper.writeValueAsString(updatedOwner);
+    	this.mockMvc.perform(put("/api/owners/" + ownerId)
+    		.content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+        	.andExpect(content().contentType("application/json"))
+        	.andExpect(status().isNoContent());
 
-        updatedOwnerDto.setTelephone("6085551023");
-        ObjectMapper mapper = new ObjectMapper();
-        String newOwnerAsJSON = mapper.writeValueAsString(updatedOwnerDto);
-        this.mockMvc.perform(put("/api/owners/" + ownerId)
-                .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(content().contentType("application/json"))
-            .andExpect(status().isNoContent());
-
-        this.mockMvc.perform(get("/api/owners/" + ownerId)
-                .accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON_VALUE))
+    	this.mockMvc.perform(get("/api/owners/" + ownerId)
+           	.accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
             .andExpect(jsonPath("$.id").value(ownerId))
-            .andExpect(jsonPath("$.firstName").value("GeorgeI"));
+            .andExpect(jsonPath("$.firstName").value("George I"));
 
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testUpdateOwnerErrorBodyIdMismatchWithPathId() throws Exception {
         int ownerId = owners.get(0).getId();
-        OwnerDto updatedOwnerDto = new OwnerDto();
+        Owner updatedOwner = new Owner();
         // body.id != ownerId
-        updatedOwnerDto.setId(-1);
-        updatedOwnerDto.setFirstName("GeorgeI");
-        updatedOwnerDto.setLastName("Franklin");
-        updatedOwnerDto.setAddress("110 W. Liberty St.");
-        updatedOwnerDto.setCity("Madison");
-        updatedOwnerDto.setTelephone("6085551023");
+        updatedOwner.setId(-1);
+        updatedOwner.setFirstName("George I");
+        updatedOwner.setLastName("Franklin");
+        updatedOwner.setAddress("110 W. Liberty St.");
+        updatedOwner.setCity("Madison");
+        updatedOwner.setTelephone("6085551023");
         ObjectMapper mapper = new ObjectMapper();
-        String newOwnerAsJSON = mapper.writeValueAsString(updatedOwnerDto);
+        String newOwnerAsJSON = mapper.writeValueAsString(updatedOwner);
         this.mockMvc.perform(put("/api/owners/" + ownerId)
-                .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+            .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isBadRequest())
             .andExpect(header().string("errors",
-                "[{\"objectName\":\"body\",\"fieldName\":\"id\",\"fieldValue\":\"-1\",\"errorMessage\":\"does not match pathId: 1\"},{\"objectName\":\"ownerDto\",\"fieldName\":\"id\",\"fieldValue\":\"-1\",\"errorMessage\":\"must be greater than or equal to 0\"}]"));
+                "[{\"objectName\":\"body\",\"fieldName\":\"id\",\"fieldValue\":\"-1\",\"errorMessage\":\"does not match pathId: 1\"}]"));
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testUpdateOwnerError() throws Exception {
-        OwnerDto newOwnerDto = owners.get(0);
-        newOwnerDto.setFirstName("");
-        ObjectMapper mapper = new ObjectMapper();
-        String newOwnerAsJSON = mapper.writeValueAsString(newOwnerDto);
-        this.mockMvc.perform(put("/api/owners/1")
-                .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isBadRequest());
-    }
+    	Owner newOwner = owners.get(0);
+    	newOwner.setFirstName("");
+    	ObjectMapper mapper = new ObjectMapper();
+    	String newOwnerAsJSON = mapper.writeValueAsString(newOwner);
+    	this.mockMvc.perform(put("/api/owners/1")
+    		.content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+        	.andExpect(status().isBadRequest());
+     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testDeleteOwnerSuccess() throws Exception {
-        OwnerDto newOwnerDto = owners.get(0);
-        ObjectMapper mapper = new ObjectMapper();
-        String newOwnerAsJSON = mapper.writeValueAsString(newOwnerDto);
-        final Owner owner = ownerMapper.toOwner(owners.get(0));
-        given(this.clinicService.findOwnerById(1)).willReturn(owner);
-        this.mockMvc.perform(delete("/api/owners/1")
-                .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isNoContent());
+    	Owner newOwner = owners.get(0);
+    	ObjectMapper mapper = new ObjectMapper();
+    	String newOwnerAsJSON = mapper.writeValueAsString(newOwner);
+    	given(this.clinicService.findOwnerById(1)).willReturn(owners.get(0));
+    	this.mockMvc.perform(delete("/api/owners/1")
+    		.content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+        	.andExpect(status().isNoContent());
     }
 
     @Test
-    @WithMockUser(roles = "OWNER_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
     public void testDeleteOwnerError() throws Exception {
-        OwnerDto newOwnerDto = owners.get(0);
-        ObjectMapper mapper = new ObjectMapper();
-        String newOwnerAsJSON = mapper.writeValueAsString(newOwnerDto);
-        given(this.clinicService.findOwnerById(-1)).willReturn(null);
-        this.mockMvc.perform(delete("/api/owners/-1")
-                .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isNotFound());
+    	Owner newOwner = owners.get(0);
+    	ObjectMapper mapper = new ObjectMapper();
+    	String newOwnerAsJSON = mapper.writeValueAsString(newOwner);
+    	given(this.clinicService.findOwnerById(-1)).willReturn(null);
+    	this.mockMvc.perform(delete("/api/owners/-1")
+    		.content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+        	.andExpect(status().isNotFound());
     }
 
 }
