@@ -15,6 +15,13 @@ provider "aws" {
 }
 
 
+# Configure the Kubernetes Provider
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+  config_context = "current-context"
+}
+
+
 # Define source modules for other AWS configurations
 module "instances" {
   source = "./EC2"
